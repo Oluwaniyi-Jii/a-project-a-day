@@ -6,8 +6,38 @@ const numbersEl = document.querySelector('#numbers')
 const symbolsEl = document.querySelector('#symbols')
 const generateEl = document.querySelector('#generate')
 const clipboardEl = document.querySelector('#clipboard')
+const toast = document.querySelector('.toast-notification')
 
+const notify = (message = null) => {
+    const notif = document.createElement(`div`)
+    notif.classList.add(`toast`)
+    notif.innerHTML = message ? message : `There Seems To Be An Error Somewhere`
+    toast.appendChild(notif)
+    setTimeout(()=>{
+        notif.remove()
+    }, 1500)
+}
 
+/**
+ * It takes in 4 boolean values and a length value, and returns a string of random characters of the
+ * length specified.
+ * 
+ * The function is broken down into 3 parts:
+ * 
+ * 1. Declare a variable to store the generated password and a variable to store the number of types of
+ * characters to include in the password.
+ * 2. Loop over the length, and call a function that generates a random character for each type of
+ * character to include in the password.
+ * 3. Return the final password.
+ * 
+ * Let's go over each part in detail.
+ * @param upper - boolean, if true, the password will include uppercase letters
+ * @param lower - boolean, if true, the password will include lowercase letters
+ * @param number - boolean, if true, the password will include numbers
+ * @param symbol - boolean, if true, the password will include symbols
+ * @param length - The length of the password.
+ * @returns a string of random characters.
+ */
 const generatePassword = (upper, lower, number, symbol, length) => {
     let generatedPassword = ``
     const typesCount = lower + upper + number + symbol
@@ -40,7 +70,7 @@ clipboardEl.addEventListener('click', () => {
     textarea.select()
     document.execCommand('copy')
     textarea.remove()
-    alert('Password copied to clipboard!')
+    notify(`Your Password Has Been Copied <br> To Your Clipboard`)
 })
 
 const getRandomLower = () => {
