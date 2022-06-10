@@ -16,10 +16,11 @@ body {
 }
 
 .card {
-	background: rgb(15,52,67);
-    background: linear-gradient(163deg, rgba(15,52,67,1) 0%, rgba(52,232,158,1) 100%);
+	background: rgb(113, 126, 131);
+    border-radius: 5px;
+    width: 500px;
+    overflow: hidden;
 	padding: 1em;
-	max-width: 800px;
 	margin: auto;
     height: 50vh;
     display: flex;
