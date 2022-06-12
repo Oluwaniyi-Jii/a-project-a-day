@@ -18,13 +18,32 @@ const levels = {
 let currentLevel = levels.easy;
 let timeCount = currentLevel + 1, scoreCount = 0, isPlaying, wordDisplayed;
 
-let currentWord = document.querySelector('#current-word'),
-    inputWord = document.querySelector('#input-word'),
-    time = document.querySelector('#seconds'),
-    timeLeft = document.querySelector('#time-left'),
-    score = document.querySelector('#score'),
-    message = document.querySelector('#message'),
-    difficultyLevel = document.querySelector('#difficulty');
+const currentWord = document.querySelector('#current-word')
+const inputWord = document.querySelector('#input-word')
+const time = document.querySelector('#seconds')
+const timeLeft = document.querySelector('#time-left')
+const score = document.querySelector('#score')
+const message = document.querySelector('#message')
+const difficultyLevel = document.querySelector('#difficulty')
+const highScoreSpan = document.querySelector('#high-score')
+
+let displayedHighScore = 0
+let savedHighScore = localStorage.getItem('highScore')
+
+/* Checking if the savedHighScore is null, if it is null, then it is setting the highScore to 0 and
+parsing the savedHighScore. */
+if (savedHighScore === null) {
+    localStorage.setItem('highScore', `${0}`);
+    displayedHighScore = JSON.parse(savedHighScore)
+}
+
+/* Checking if the savedHighScore is not null, if it is not null, then it is parsing the savedHighScore
+and displaying it in the highScoreSpan. */
+if (savedHighScore !== null) {
+    displayedHighScore = JSON.parse(savedHighScore)
+    highScoreSpan.innerHTML = `${displayedHighScore}`
+
+}
 
 
 // EVENT LISTENERS
@@ -62,14 +81,23 @@ function countdown() {
         isPlaying = false;
     }
 }
+
 /**
- * If the game is not playing and the time is up, then display a message and reset the score.
+ * If the game is not playing and the time is up, then display the message "Time Up!!" and if the score
+ * is greater than the displayed high score, then set the displayed high score to the score and set the
+ * local storage high score to the score and set the high score span to the score and set the displayed
+ * score to 0 and set the message class to "mt-3 text-danger".
  */
 function checkStatus() {
     if (!isPlaying && timeCount === 0) {
         message.textContent = 'Time Up!!';
+        if (scoreCount > displayedHighScore) {
+            displayedHighScore = scoreCount
+            localStorage.setItem('highScore', `${scoreCount}`);
+            highScoreSpan.innerHTML = `${scoreCount}`
+        }
         scoreCount = 0
-        message.className = 'mt-3 text-danger';
+        message.className = 'mt-3 text-danger'; 
     }
 }
 /**
