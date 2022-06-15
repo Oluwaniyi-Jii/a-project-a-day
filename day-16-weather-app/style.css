@@ -38,7 +38,6 @@ main {
     border: 1px solid rgb(187, 187, 187);
     border-radius: 25px;
     outline: none;
-    font-family: "Nanum Gothic", sans-serif;
     margin-bottom: 1rem;
 }
 .formBtn {
